@@ -22,7 +22,8 @@ textarea{
 }
 
 main {
-  width: min(100% - 32px, 560px);
+  width: calc(100% - 32px);
+  max-width: 800px;
   margin: 0 auto;
   padding: 64px 0;
 }
@@ -129,6 +130,7 @@ button:disabled {
 }
 
 .lista-tarefas {
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -136,7 +138,9 @@ button:disabled {
 }
 
 .tarefas-card {
-  padding: 20px;
+  width: 100%;
+  min-width: 0;
+  padding: 28px;
   background: white;
   border-radius: 12px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.8);
@@ -166,8 +170,7 @@ button:disabled {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
-  max-width: 650px;
-  margin: 0 auto;
+  width: 100%;
 }
 
 .status{
@@ -215,8 +218,32 @@ button:disabled {
 }
 
 @media (max-width: 480px) {
+  main {
+    width: calc(100% - 24px);
+    padding: 32px 0;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+  }
+
+  form {
+    padding: 20px;
+  }
+
+  .tarefa-card {
+    padding: 20px;
+  }
+
+  .tarefa-card h2 {
+    font-size: 1.25rem;
+    overflow-wrap: anywhere;
+  }
+
   .tarefa-rodape {
-    align-items: flex-end;
+    width: 100%;
   }
 }
 
