@@ -1,75 +1,148 @@
-# React + TypeScript + Vite
+# ToDo App — Front-end
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Interface web responsiva para gerenciamento de tarefas, desenvolvida com React, TypeScript e Vite.
 
-Currently, two official plugins are available:
+O projeto consome uma API REST construída com FastAPI e permite criar, visualizar, concluir, reabrir e excluir tarefas.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Aplicação publicada
 
-## React Compiler
+Acesse o projeto:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+https://todo-app-frontend-e35w.onrender.com
 
-## Expanding the ESLint configuration
+## API utilizada
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Documentação Swagger:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+https://api-lista-de-tarefas-zjn5.onrender.com/docs
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Repositório do back-end:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+https://github.com/RafaDavila/API-Lista-de-Tarefas
 
-```
+## Funcionalidades
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- Criar tarefas com título e descrição
+- Validação de título e descrição
+- Listar tarefas cadastradas
+- Exibir data e horário de criação
+- Marcar tarefas como concluídas
+- Reabrir tarefas concluídas
+- Excluir tarefas
+- Confirmar antes da exclusão
+- Exibir mensagens de sucesso e erro
+- Exibir estado de carregamento
+- Navegação entre páginas
+- Interface responsiva para computadores e celulares
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Tecnologias utilizadas
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- React
+- TypeScript
+- Vite
+- React Router
+- Lucide React
+- CSS
+- Fetch API
+- Render
+
+## Integração com a API
+
+O front-end consome os seguintes endpoints:
+
+| Método | Endpoint | Função |
+|---|---|---|
+| POST | `/tasks/` | Criar uma tarefa |
+| GET | `/tasks/` | Listar tarefas |
+| GET | `/tasks/{id}` | Buscar uma tarefa |
+| PUT | `/tasks/{id}` | Atualizar uma tarefa |
+| DELETE | `/tasks/{id}` | Excluir uma tarefa |
+
+A URL da API é configurada por variável de ambiente:
+
+```env
+VITE_API_URL=https://api-lista-de-tarefas-zjn5.onrender.com
 
 ```
+
+## Como Executar localmente: 
+
+### Pré-requisitos
+- Node.js;
+- npm;
+- Git;
+
+### Instalação
+
+Clone o repositório:
+```
+git clone https://github.com/RafaDavila/API-Lista-de-Tarefas-FrontEnd.git
+```
+Entre na pasta: 
+```
+cd API-Lista-de-Tarefas-FrontEnd
+```
+Instale as depedências: 
+```
+npm install
+```
+Crie o arquivo .env com base no .env.example:
+```
+VITE_API_URL=https://api-lista-de-tarefas-zjn5.onrender.com
+```
+
+Inicie o servidor de desenvolvimento:
+```
+npm run dev
+```
+A aplicação ficará disponível normalmente em:
+```
+http://localhost:5173
+```
+## Build de produção
+
+Para gerar a versão otimizada:
+```
+npm run build
+```
+Os arquivos serão criados na pasta:
+```
+dist/
+```
+Para testar a build localmente:
+```
+npm run preview
+```
+## Estrutura principal
+```
+src/
+├── pages/
+│   ├── Home.tsx
+│   └── Tasks.tsx
+├── App.tsx
+├── App.css
+├── index.css
+└── main.tsx
+```
+
+## Observação
+
+Atualmente, a aplicação utiliza uma lista pública e compartilhada.
+
+Como ainda não existe autenticação, todos os visitantes acessam as mesmas tarefas e podem criar, atualizar ou excluir itens.
+
+Uma futura evolução do projeto será adicionar autenticação com JWT e associar cada tarefa ao seu respectivo usuário.
+
+## Próximas melhorias:
+- Autenticação de usuários com JWT
+- Tarefas individuais por usuário
+- Edição de título e descrição
+- Filtros por tarefas pendentes e concluídas
+- Testes automatizados do front-end
+- Paginação da lista
+- Melhorias de acessibilidade
+
+## Autor
+Desenvolvido por Rafael Davila.
+GitHub: https://github.com/RafaDavila
+
