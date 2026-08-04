@@ -38,9 +38,18 @@ function Home() {
         throw new Error('Não foi possível criar a tarefa')
       }
 
-      const tarefaCriada = await response.json()
+      const respostaTexto = await response.text()
 
-      console.log('Tarefa criada:', tarefaCriada)
+      console.log('Status da resposta:', response.status)
+      console.log('Corpo da resposta:', respostaTexto)
+
+        if (!respostaTexto) {
+          throw new Error('A API respondeu sem conteúdo')
+        }
+
+        const tarefaCriada = JSON.parse(respostaTexto)
+
+        console.log('Tarefa criada:', tarefaCriada)
 
       setTitulo('')
       setDescricao('')
