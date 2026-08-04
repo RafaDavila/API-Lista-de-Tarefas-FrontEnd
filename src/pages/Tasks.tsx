@@ -109,6 +109,13 @@ function Tasks() {
     }
   }
 
+  function formatarData(data: string) {
+  return new Intl.DateTimeFormat('pt-BR', {
+    dateStyle: 'short',
+    timeStyle: 'short',
+  }).format(new Date(data))
+}
+
   return (
     <main>
       <h1>Tarefas criadas</h1>
@@ -128,6 +135,10 @@ function Tasks() {
               <h2>{tarefa.titulo}</h2>
 
               {tarefa.descricao && <p>{tarefa.descricao}</p>}
+
+              <p className="data-criacao">
+                Criada em {formatarData(tarefa.data_criacao)}
+              </p>
 
               <div className="tarefa-rodape">
                 <span className={tarefa.concluida ? 'status concluida' : 'status pendente'}>

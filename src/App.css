@@ -199,7 +199,7 @@ button:disabled {
 
 .tarefa-acoes button{
   display: flex;
-  transform: translateY(-40px);
+  transform: translateY(-56px);
   align-items: center;
   justify-content: center;
   width: 38px;
@@ -253,4 +253,10 @@ button:disabled {
   border: 1px solid #e2e8f0;
   border-radius: 12px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+}
+
+.data-criacao {
+  margin: 8px 0 16px;
+  font-size: 0.875rem;
+  color: #64748b;
 }
