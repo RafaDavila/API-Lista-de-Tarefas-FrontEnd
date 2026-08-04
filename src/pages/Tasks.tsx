@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 import '../App.css'
+import {Check, RotateCcw, Trash2} from 'lucide-react'
 
 type Task = {
   id: number
@@ -62,9 +63,30 @@ function Tasks() {
 
               {tarefa.descricao && <p>{tarefa.descricao}</p>}
 
-              <span>
-                {tarefa.concluida ? 'Concluída' : 'Pendente'}
-              </span>
+              <div className="tarefa-rodape">
+                <span className={tarefa.concluida ? 'status concluida' : 'status pendente'}>
+                  {tarefa.concluida ? 'Concluída' : 'Pendente'}
+                </span>
+                <div className="tarefa-acoes">
+                  <button
+                    type="button"
+                    className="botao-concluir"
+                    aria-label={tarefa.concluida ? 'Reabrir tarefa' : 'Concluir tarefa'}
+                    title={tarefa.concluida ? 'Reabrir tarefa' : 'Concluir tarefa'}
+                  >
+                    {tarefa.concluida ? <RotateCcw size={18} /> : <Check size={18} />}
+                  </button>
+
+                  <button
+                    type="button"
+                    className="botao-excluir"
+                    aria-label="Excluir tarefa"
+                    title="Excluir tarefa"
+                  >
+                    <Trash2 size={18} />
+                  </button>
+                </div>
+              </div>
             </article>
           ))}
         </section>
