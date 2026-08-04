@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 import '../App.css'
-import {Check, RotateCcw, Trash2} from 'lucide-react'
+import { Check, RotateCcw, Trash2 } from 'lucide-react'
+
+const API_URL = import.meta.env.VITE_API_URL
 
 type Task = {
   id: number
@@ -22,7 +24,7 @@ function Tasks() {
     async function buscarTarefas() {
       try {
         const response = await fetch(
-          'https://api-lista-de-tarefas-zjn5.onrender.com/tasks/',
+          `${API_URL}/tasks/`,
         )
 
         if (!response.ok) {
@@ -44,68 +46,68 @@ function Tasks() {
   }, [])
 
   async function alternarConclusao(tarefa: Task) {
-  try {
-    const response = await fetch(
-      `https://api-lista-de-tarefas-zjn5.onrender.com/tasks/${tarefa.id}`,
-      {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
+    try {
+      const response = await fetch(
+        `${API_URL}/tasks/${tarefa.id}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            titulo: tarefa.titulo,
+            descricao: tarefa.descricao,
+            concluida: !tarefa.concluida,
+          }),
         },
-        body: JSON.stringify({
-          titulo: tarefa.titulo,
-          descricao: tarefa.descricao,
-          concluida: !tarefa.concluida,
-        }),
-      },
-    )
+      )
 
-    if (!response.ok) {
-      throw new Error('Não foi possível atualizar a tarefa')
+      if (!response.ok) {
+        throw new Error('Não foi possível atualizar a tarefa')
+      }
+
+      const tarefaAtualizada: Task = await response.json()
+
+      setTarefas((tarefasAtuais) =>
+        tarefasAtuais.map((item) =>
+          item.id === tarefaAtualizada.id ? tarefaAtualizada : item,
+        ),
+      )
+    } catch (error) {
+      console.error('Erro ao atualizar tarefa:', error)
+      setErro('Erro ao atualizar a tarefa.')
     }
-
-    const tarefaAtualizada: Task = await response.json()
-
-    setTarefas((tarefasAtuais) =>
-      tarefasAtuais.map((item) =>
-        item.id === tarefaAtualizada.id ? tarefaAtualizada : item,
-      ),
-    )
-  } catch (error) {
-    console.error('Erro ao atualizar tarefa:', error)
-    setErro('Erro ao atualizar a tarefa.')
   }
-}
 
   async function excluirTarefa(id: number) {
-  const confirmarExclusao = window.confirm(
-    'Tem certeza de que deseja excluir esta tarefa?',
-  )
-
-  if (!confirmarExclusao) {
-    return
-  }
-
-  try {
-    const response = await fetch(
-      `https://api-lista-de-tarefas-zjn5.onrender.com/tasks/${id}`,
-      {
-        method: 'DELETE',
-      },
+    const confirmarExclusao = window.confirm(
+      'Tem certeza de que deseja excluir esta tarefa?',
     )
 
-    if (!response.ok) {
-      throw new Error('Não foi possível excluir a tarefa')
+    if (!confirmarExclusao) {
+      return
     }
 
-    setTarefas((tarefasAtuais) =>
-      tarefasAtuais.filter((tarefa) => tarefa.id !== id),
-    )
-  } catch (error) {
-    console.error('Erro ao excluir tarefa:', error)
-    setErro('Erro ao excluir a tarefa.')
+    try {
+      const response = await fetch(
+        `${API_URL}/tasks/${id}`,
+        {
+          method: 'DELETE',
+        },
+      )
+
+      if (!response.ok) {
+        throw new Error('Não foi possível excluir a tarefa')
+      }
+
+      setTarefas((tarefasAtuais) =>
+        tarefasAtuais.filter((tarefa) => tarefa.id !== id),
+      )
+    } catch (error) {
+      console.error('Erro ao excluir tarefa:', error)
+      setErro('Erro ao excluir a tarefa.')
+    }
   }
-}
 
   return (
     <main>

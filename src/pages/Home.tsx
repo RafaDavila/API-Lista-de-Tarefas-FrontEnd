@@ -1,6 +1,8 @@
 import { useState } from 'react'
-import {useNavigate} from 'react-router'
+import { useNavigate } from 'react-router'
 import '../App.css'
+
+const API_URL = import.meta.env.VITE_API_URL
 
 function Home() {
   const [titulo, setTitulo] = useState('')
@@ -19,7 +21,7 @@ function Home() {
 
     try {
       const response = await fetch(
-        'https://api-lista-de-tarefas-zjn5.onrender.com/tasks/',
+        `${API_URL}/tasks/`,
         {
           method: 'POST',
           headers: {
