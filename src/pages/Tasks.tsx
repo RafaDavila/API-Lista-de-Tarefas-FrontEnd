@@ -43,6 +43,40 @@ function Tasks() {
     buscarTarefas()
   }, [])
 
+  async function alternarConclusao(tarefa: Task) {
+  try {
+    const response = await fetch(
+      `https://api-lista-de-tarefas-zjn5.onrender.com/tasks/${tarefa.id}`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          titulo: tarefa.titulo,
+          descricao: tarefa.descricao,
+          concluida: !tarefa.concluida,
+        }),
+      },
+    )
+
+    if (!response.ok) {
+      throw new Error('Não foi possível atualizar a tarefa')
+    }
+
+    const tarefaAtualizada: Task = await response.json()
+
+    setTarefas((tarefasAtuais) =>
+      tarefasAtuais.map((item) =>
+        item.id === tarefaAtualizada.id ? tarefaAtualizada : item,
+      ),
+    )
+  } catch (error) {
+    console.error('Erro ao atualizar tarefa:', error)
+    setErro('Erro ao atualizar a tarefa.')
+  }
+}
+
   return (
     <main>
       <h1>Tarefas criadas</h1>
@@ -71,6 +105,7 @@ function Tasks() {
                   <button
                     type="button"
                     className="botao-concluir"
+                    onClick={() => alternarConclusao(tarefa)}
                     aria-label={tarefa.concluida ? 'Reabrir tarefa' : 'Concluir tarefa'}
                     title={tarefa.concluida ? 'Reabrir tarefa' : 'Concluir tarefa'}
                   >
