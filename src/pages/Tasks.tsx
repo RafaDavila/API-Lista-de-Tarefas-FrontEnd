@@ -77,6 +77,36 @@ function Tasks() {
   }
 }
 
+  async function excluirTarefa(id: number) {
+  const confirmarExclusao = window.confirm(
+    'Tem certeza de que deseja excluir esta tarefa?',
+  )
+
+  if (!confirmarExclusao) {
+    return
+  }
+
+  try {
+    const response = await fetch(
+      `https://api-lista-de-tarefas-zjn5.onrender.com/tasks/${id}`,
+      {
+        method: 'DELETE',
+      },
+    )
+
+    if (!response.ok) {
+      throw new Error('Não foi possível excluir a tarefa')
+    }
+
+    setTarefas((tarefasAtuais) =>
+      tarefasAtuais.filter((tarefa) => tarefa.id !== id),
+    )
+  } catch (error) {
+    console.error('Erro ao excluir tarefa:', error)
+    setErro('Erro ao excluir a tarefa.')
+  }
+}
+
   return (
     <main>
       <h1>Tarefas criadas</h1>
@@ -115,6 +145,7 @@ function Tasks() {
                   <button
                     type="button"
                     className="botao-excluir"
+                    onClick={() => excluirTarefa(tarefa.id)}
                     aria-label="Excluir tarefa"
                     title="Excluir tarefa"
                   >
